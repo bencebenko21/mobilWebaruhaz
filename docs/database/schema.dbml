@@ -1,0 +1,113 @@
+// Use DBML to define your database structure
+// Docs: https://dbml.dbdiagram.io/docs
+
+Table users {
+  id integer [primary key, increment]
+  first_name varchar
+  last_name varchar
+  email varchar [unique]
+  password varchar
+  phone_number varchar
+  zip_code varchar
+  city varchar
+  street_name varchar
+  floor_flat varchar
+  is_admin boolean
+}
+
+Table make {
+  id integer [primary key, increment]
+  brand varchar [unique]
+}
+
+Table line {
+  id integer [primary key, increment]
+  name varchar
+  make_id integer
+}
+
+Table color{
+
+  id integer [primary key, increment]
+  name varchar [unique]
+}
+
+Table size{
+  id integer [primary key, increment]
+  name varchar [unique]
+}
+
+Table storage{
+  id integer [primary key, increment]
+  name varchar [unique]
+}
+
+Table product{
+  id integer [primary key, increment]
+  name varchar
+  description text
+  line_id integer
+}
+
+Table ProductVariant{
+  id integer [primary key, increment]
+  product_id integer
+  color_id integer
+  size_id integer
+  storage_id integer
+  price decimal (10,2)
+}
+
+Table InventoryStock{
+  id integer [primary key, increment]
+  variant_id integer
+  stock integer
+  shipment_date date
+}
+
+Table Cart {
+  id integer [primary key, increment]
+  user_id integer
+  last_change timestamp
+}
+
+Table CartItem {
+  id integer [primary key, increment]
+  cart_id integer
+  variant_id integer
+  quantity integer
+
+}
+
+Table Order {
+  id integer [primary key, increment]
+  user_id integer
+  order_number string
+  status varchar
+  delivery_address varchar
+  order_date timestamp
+}
+
+Table OrderItem {
+  id integer [primary key, increment]
+  order_id integer
+  variant_id integer
+  quantity integer
+  price_at_purchase decimal (10,2)
+
+}
+
+Ref: line.make_id > make.id
+Ref: product.line_id > line.id
+Ref: ProductVariant.product_id > product.id
+Ref: ProductVariant.size_id > size.id
+Ref: ProductVariant.storage_id > storage.id
+Ref: ProductVariant.color_id > color.id
+Ref: InventoryStock.variant_id - ProductVariant.id
+Ref: Cart.user_id - users.id
+Ref: CartItem.cart_id - Cart.id
+Ref: CartItem.variant_id > ProductVariant.id
+Ref: Order.user_id > users.id
+Ref: OrderItem.order_id > Order.id
+Ref: OrderItem.variant_id > ProductVariant.id
+
