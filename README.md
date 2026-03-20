@@ -10,7 +10,7 @@ The admin can add new products, update or reset information. Each item has their
 **Tech Stack:**\
 Frontend: Angular\
 Backend: Django\
-Database: MySQL
+Database: PostgreSQL
 
 **Features:** 
 - Basic CRUD operations with a web GUI by only authenticated users (admin)
